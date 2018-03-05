@@ -17,13 +17,13 @@ use osc\common\controller\HomeBase;
 class Index extends HomeBase
 {
     public function index()
-    {    			
+    {    		
 		$list = osc_goods()->get_home_goods_list();
 		
 		$this->assign('empty', '~~暂无数据');
 		
 		$this->assign('list', $list);
-		
+
 		$this->assign('SEO',['title'=>config('SITE_TITLE'),'keywords'=>config('SITE_KEYWORDS'),'description'=>config('SITE_DESCRIPTION')]);
 		
 		return $this->fetch();

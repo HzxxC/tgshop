@@ -340,6 +340,10 @@ final class OscshopWechat extends Wechat
             }			
 		}
 		if($user_info){
+
+			// 新用户注册积分
+			$points = get_new_member_initial_points();
+			
 						
 			$uid=Db::name('member')->insert([
 				'wechat_openid'=>$user_info['openid'],
@@ -348,10 +352,14 @@ final class OscshopWechat extends Wechat
 				'sex'=>$user_info['sex'],
 				'userpic'=>$user_info['headimgurl'],
 				'checked'=>1,
+				'points' => $points,
 				'groupid'=>config('default_group_id'),
 				'regdate'=>time(),
 			],
 			false,true);
+
+			// 更新积分日志
+			insert_points_log($uid, $points, 1, 3, '新注册会员初始积分');
 			
 			$user['uid']=$uid;
 			$user['openid']=$user_info['openid'];

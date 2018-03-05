@@ -482,3 +482,40 @@ function create_tables($module)
 function write_to_file($path,$data=array()){
 	file_put_contents($path,var_export($data,true));
 }
+
+/**
+ * 获得新用户初始积分
+ * @return [type] [description]
+ */
+function get_new_member_initial_points() {
+	
+	$result = Db::name('points_setting') -> where(['tag'=>'register']) -> find();
+
+	return $result['status'] == 0 ? 0 : $result['points'];
+}
+
+/**
+ * 更新会员积分日志
+ * @param  [type] $uid    会员ID
+ * @param  [type] $points 积分
+ * @param  [type] $prefix 1.增加；2.减少
+ * @param  [type] $type   类型：1.下单；2.管理员操作；3.注册获取积分；4.签到获取积分；
+ * @param  string $description    信息
+ * @return [type]         [description]
+ */
+function insert_points_log($uid, $points, $prefix, $type, $description="") {
+	
+	if(!empty($points)){			
+		
+		Db::name('points')->insert(
+			[
+				'uid'=> $uid,
+				'points'=>$points,
+				'description'=>$msg,
+				'prefix'=>$prefix,
+				'creat_time'=>time(),
+				'type'=>$type
+			]
+		);
+	}
+}
