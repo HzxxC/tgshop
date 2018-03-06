@@ -494,6 +494,12 @@ function get_new_member_initial_points() {
 	return $result['status'] == 0 ? 0 : $result['points'];
 }
 
+function get_member_sign_in_points() {
+	$result = Db::name('points_setting') -> where(['tag'=>'sign_in']) -> find();
+
+	return $result['status'] == 0 ? 0 : $result['points'];
+}
+
 /**
  * 更新会员积分日志
  * @param  [type] $uid    会员ID
@@ -507,7 +513,7 @@ function insert_points_log($uid, $points, $prefix, $type, $description="") {
 	
 	if(!empty($points)){			
 		
-		Db::name('points')->insert(
+		return Db::name('points')->insert(
 			[
 				'uid'=> $uid,
 				'order_id' => 0,
@@ -519,4 +525,34 @@ function insert_points_log($uid, $points, $prefix, $type, $description="") {
 			]
 		);
 	}
+	return false;
 }
+
+function member_has_sign_in($uid) {
+
+	$res = Db::query('select count(points_id) count from '.config('database.prefix').'points where TO_DAYS(FROM_UNIXTIME(creat_time))=TO_DAYS(now()) AND type=4 AND uid='.$uid);
+
+	return $res[0]['count'];
+}
+
+function member_sign_in($uid, $points, $description="") {
+	if (member_has_sign_in($uid)) {
+		return ['error'=>'已签到'];
+	} else {
+		Db::name('points')->insert(
+			[
+				'uid'=> $uid,
+				'order_id' => 0,
+				'points'=>$points,
+				'description'=>$description,
+				'prefix'=>1,
+				'creat_time'=>time(),
+				'type'=>4
+			]
+		);
+		//积分
+		Db::name('member')->where('uid',$uid)->setInc('points',$points);
+		return ['success'=>'签到成功'];
+	}
+}
+

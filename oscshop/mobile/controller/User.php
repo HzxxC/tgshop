@@ -36,6 +36,8 @@ class User extends MobileBase
 		$this->assign('paid',$this->order_count(config('paid_order_status_id')));			
 		$this->assign('userinfo',Db::name('member')->where('uid',UID)->find());		
 		$this->assign('SEO',['title'=>config('SITE_TITLE')]);
+
+		$this->assign('has_sign', member_has_sign_in(UID));
 		
 		$this->assign('flag','user');
 		

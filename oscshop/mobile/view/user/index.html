@@ -1,7 +1,24 @@
 {extend name="public:base" /}
 {block name="head"}
 <link href="__PUBLIC__/view_res/mobile/css/uc.css" type="text/css" rel="Stylesheet" />
-
+<style>
+	#sign-in {
+		display: inline-block;
+	    float: right;
+	    padding: 5px 20px;
+	    font-size: 13px;
+	    position: relative;
+	    top: 16px;
+	    right: 25px;
+	}
+	.btn-default {
+		background-color: #ffeb42;
+		color: #b25d06;
+	}
+	button.button {
+		border:none;
+	}
+</style>
 {/block} 
 
 {block name="content"}
@@ -27,7 +44,12 @@
     </div>
     <div class="comspreadstat clearfix">
         <span class="spread-item" onclick="location.href = '{:url("Points/points_list")}';"><b>{$userinfo.points}</b>积分</span>        
-        <span class="spread-item" onclick="location.href = '{:url("User/wish_list")}';"><b>{$userinfo.wish}</b>收藏</span>
+        <!-- <span class="spread-item" onclick="location.href = '{:url("User/wish_list")}';"><b>{$userinfo.wish}</b>收藏</span> -->
+        {if condition="$has_sign"}
+        	<button  class="button btn-default" disabled="disabled" id="sign-in">已签到</button>
+        {else/}
+        	<a  class="button" href="{:url("SignIn/index")}" id="sign-in">签到</a >
+        {/if}
     </div>
 </div>
 

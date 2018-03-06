@@ -1,0 +1,78 @@
+{/block}{extend name="public:base" /}
+{block name="head"}
+<link href="__PUBLIC__/view_res/mobile/css/uc.css" type="text/css" rel="Stylesheet" />
+<link href="__PUBLIC__/view_res/mobile/css/qiandao_style.css" type="text/css" rel="Stylesheet" />
+<style>
+	html,body { width: 100%;height:100%; }
+    .qiandao-warp,.qiandap-box,.qiandao-con { width: 100%;height:100%; }
+</style>
+{/block} 
+{block name="header"}
+{include file="public/top-nav" /}
+{/block}
+
+{block name="content"}
+<div class="qiandao-warp">
+    <div class="qiandap-box">
+        <div class="qiandao-con clear">
+            <div class="qiandao-right">
+                <div class="qiandao-top">
+                    {if condition="$has_sign_in"}
+                        <div class="just-qiandao qiandao-sprits active"></div>
+                    {else/}
+                        <div class="just-qiandao qiandao-sprits" id="js-just-qiandao"></div>
+                    {/if}
+                    <!-- <p class="qiandao-notic">今日已领<span>0.1</span>元，请明日继续签到</p> -->
+                </div>
+                <div class="qiandao-bottom">
+                    <div class="qiandao-rule-list">
+                        <h4>签到规则</h4>
+                        <p>首次签到获得0.05元现金奖励</p>
+                        <p>连续签到每天增加0.01元现金奖励</p>
+                        <p>连续签到16天及以上每天获得0.2元现金奖励</p>
+                    </div>
+                    <div class="qiandao-rule-list">
+                        <h4>其他说明</h4>
+                        <p>如果中间有一天间断未签到的，重先开始计算连续签到时间。</p>
+                        <p>连续签到获得奖励后分享到QQ空间、微信朋友圈后再获得一次奖励，每天只限分享一次。</p>
+                        <p>获得的奖励不能直接提现，只能投资后转让变现。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 遮罩背景 -->
+<div class="sign_bg"></div>
+<!-- 签到成功弹框 -->
+<div class="sign_tk" id="suc_tk">
+    <div class="sign_suc">
+        <div class="suc_title"></div>
+        <div class="sign_con">
+            <p>恭喜您</p>
+            <p>今日签到成功</p>
+        </div>
+        <div class="sign_close" id="suc_close"></div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    $(function() {
+        var url = "{:url('SignIn/sign_in')}";
+        $('#js-just-qiandao').on('click', function() {
+            $.post(url, function(d) {
+                if (d.success) {
+                    $('#js-just-qiandao').addClass('active');
+                    $('#js-just-qiandao').unbind("click"); 
+                    $('.sign_tk, .sign_bg').show();
+                }
+            });
+        });
+        $('.sign_close').on('click', function() {
+            $('.sign_tk, .sign_bg').hide();
+        });
+    });
+</script>
+{/block}
