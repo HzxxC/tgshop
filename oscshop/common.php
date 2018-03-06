@@ -510,8 +510,9 @@ function insert_points_log($uid, $points, $prefix, $type, $description="") {
 		Db::name('points')->insert(
 			[
 				'uid'=> $uid,
+				'order_id' => 0,
 				'points'=>$points,
-				'description'=>$msg,
+				'description'=>$description,
 				'prefix'=>$prefix,
 				'creat_time'=>time(),
 				'type'=>$type
