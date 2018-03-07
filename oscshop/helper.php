@@ -16,6 +16,7 @@ use \osc\common\service\Goods;
 use \osc\common\service\System;
 use \osc\common\service\Transport;
 use \osc\common\service\Order;
+use \osc\common\service\Advert;
 use \oscshop\Hashids;
 use think\exception\ClassNotFoundException;
 use \oscshop\Weight;
@@ -120,4 +121,14 @@ if (!function_exists('hashids')) {
     	return new Hashids(config('PWD_KEY'),10);
     }
 }
+if (!function_exists('osc_advert')) {
+    /**
+     * 商品相关数据助手函数
+     */
+    function osc_advert()
+    {
+        return Advert::getInstance();
+    }
+}
+
 ?>

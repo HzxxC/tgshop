@@ -1,0 +1,160 @@
+{extend name="public:base" /}
+{block name="content"}	
+<div class="page-header">
+	<h1>
+		{$breadcrumb1}
+		<small>
+			<i class="ace-icon fa fa-angle-double-right"></i>
+			{$breadcrumb2}
+		</small>
+		<small>
+			<i class="ace-icon fa fa-angle-double-right"></i>
+			{$crumbs}
+		</small>			
+	<button type="submit" style="float:right;" id='send' form="form-goods"  class="btn button btn-sm btn-primary">提交</button>
+	</h1>
+</div>
+	<div class="row">
+	<div class="col-xs-12">	
+		<div class="panel-body">
+        <form action="{:url('Advert/edit_general')}" method="post" enctype="multipart/form-data" id="form-goods" class="form-horizontal">
+        
+        {if condition="$Request.param.id"}
+			<input name="advert_id" type="hidden" value="{$Request.param.id}" />
+		{/if}
+          <ul class="nav nav-tabs">
+          	
+          	<li class="active"><a href="#tab-data" data-toggle="tab">基本信息</a></li>
+            {if condition="$advert.type eq 1"}<li id="outer_link"><a href="#tab-general" data-toggle="tab">广告内容</a></li>{/if}
+          </ul>
+          <div class="tab-content">
+          		
+	          	<!-- 基本信息 START -->
+	          	<div class="tab-pane active" id="tab-data">
+	          		
+	          		<div class="form-group required">
+		                <label class="col-sm-2 control-label" for="input-image">
+		                <span title="" data-toggle="tooltip" data-original-title="上传800x800的图片">缩略图：</span>
+		                </label>
+		                
+		                <div class="col-sm-10" id="thumb">
+		                  <a id="thumb-image" href="#" data-toggle="image" class="img-thumbnail">
+		                  		{if condition="!empty($advert['image'])"}
+		                  			<img src="IMG_ROOT{$advert.image|resize=100,100}" />
+			                  	{else /}
+			                  		<img src="__PUBLIC__/image/no_image_100x100.jpg" />
+			                  	{/if}
+								</a>
+		                  <input type="hidden" name="image" value="{$advert.image}" id="input-image" />
+		            </div>
+		            
+		            </div>   
+		            
+		            <div class="form-group required">
+						<label class="col-sm-2 control-label" for="input-name2">广告名称</label>
+						<div class="col-sm-10">
+							<input id="input-name2" class="form-control" type="text" placeholder="广告名称" value="{$advert.name}" name="name">
+						</div>
+					</div>
+
+					<div class="form-group required">
+						<label class="col-sm-2 control-label" for="input-name2">广告类型</label>
+						<div class="col-sm-10">
+							<select name="type">
+								<option {if condition="$advert.type eq 1"} selected="selected"{/if} value="1">站内广告</option>
+								<option {if condition="$advert.type eq 2"} selected="selected"{/if} value="2">站外广告</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group required" id="href" {if condition="$advert.type eq 1"} style="display:none;"{/if} >
+						<label class="col-sm-2 control-label" for="input-name2">外站广告链接</label>
+						<div class="col-sm-10">
+							<input id="input-name2" class="form-control" type="text" placeholder="外站广告链接地址" value="{$advert.href}" name="href">
+						</div>
+					</div>
+		            
+		            
+		            <div class="form-group">
+						<label class="col-sm-2 control-label">广告状态：</label>
+						<div class="col-sm-10">
+							<label class="radio-inline">
+							<input type="radio" {if condition="$advert.status eq 1"} checked="checked"{/if} value="1" name="status">启用</label>
+							<label class="radio-inline">
+							<input type="radio" {if condition="$advert.status eq 2"} checked="checked"{/if} value="2" name="status">停用</label>
+						</div>
+					</div>
+		            
+		            <div class="form-group required">
+						<label class="col-sm-2 control-label" for="input-meta-title2">排序：</label>
+						<div class="col-sm-10">
+							<input id="input-meta-title2" class="form-control" type="text" placeholder="排序" value="{$advert.sort_order}" name="sort_order">
+						</div>
+					</div>
+		            
+	          	</div>
+	          	<!-- 基本信息 END -->
+	          	
+	          	<!-- 商品描述  START -->
+	          	<div class="tab-pane" id="tab-general">	          		
+					
+					<div class="form-group">
+	                    <label class="col-sm-2 control-label" for="input-description">广告内容：</label>
+	                    <div class="col-sm-10">
+	                      <textarea name="description" id="description">{$advert.description|default=''}</textarea>	
+	                    </div>
+                  	</div>
+					
+					
+	          	</div>
+	          	<!-- 商品描述 END -->  
+	          	
+        
+          </div>
+        </form>
+	</div>
+	</div>
+</div>
+{/block}
+{block name="javascript"}	
+<script src="__PUBLIC__/js/ckeditor/ckeditor.js"></script> 
+<script>
+$(function(){
+	{if condition="$Request.param.id"}
+		Oscshop.setValue("status", {$advert.status|default=1});		
+	{/if}
+});	
+
+$('select[name="type"]').on('change',function() {
+	if ($(this).val() == 2) {
+		$('#outer_link').hide();
+		$('#href').show();
+	} else {
+		$('#outer_link').show();
+		$('#href').hide();
+	}
+});
+
+$('#send').click(function(){
+	
+	var name=$('input[name="name"]').val();
+	
+	if(name==''){
+		alert('商品名称必填');
+		return false;
+	}	
+	
+	return true;
+}); 
+
+
+CKEDITOR.replace('description', {
+	filebrowserImageUploadUrl: '{:url("FileManager/ckupload")}',	
+	toolbar: [
+				[ 'Source', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ],
+				[ 'FontSize', 'TextColor', 'BGColor' ],
+				[ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock','Image','Format']
+			]	
+});
+</script>
+{/block}
