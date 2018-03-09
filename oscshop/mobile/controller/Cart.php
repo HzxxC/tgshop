@@ -40,6 +40,7 @@ class Cart extends MobileBase{
 		}
 	
 		$total_all_price=0;
+		$total_buy_points=0;
 		
 		$total_point=0;
 		
@@ -48,6 +49,7 @@ class Cart extends MobileBase{
 		if(!empty($goods)){
 			foreach ($goods as $k => $v) {
 				$total_point+=$v['total_pay_points'];
+				$total_buy_points+=$v['buy_points'];
 				$total_all_price+=$v['total'];
 				if ($v['shipping']) {
 					$weight += osc_weight()->convert($v['weight'], $v['weight_class_id'],config('weight_id'));
@@ -89,7 +91,8 @@ class Cart extends MobileBase{
 		}
 
 		$this->assign('goods',$goods);		
-		$this->assign('total_price',$total_all_price);		
+		$this->assign('total_price',$total_all_price);	
+		$this->assign('total_buy_points', $total_buy_points);	
 		$this->assign('weight',$weight);		
 		
 		if('points'==input('param.type')){//积分购物车			
@@ -117,7 +120,11 @@ class Cart extends MobileBase{
    		//判断商品是否存在，并验证最小起订量   		
    		if($error=$cart->check_minimum($param)){   			
    			return $error;			
-   		}		
+   		}	
+   		// 判断会员是否已参与此次团购
+   		if($error=$cart->check_member_has_join($param, $uid)){
+   			return $error;
+   		}
 		//验证商品数量和必选项
 		if($error=$cart->check_quantity($param)){			
 			return $error;

@@ -55,7 +55,8 @@ class Goods{
 			$goods['price']=(float)$data['price'];
 			$goods['quantity']=(int)$data['quantity'];
 			$goods['points']=$data['points'];
-			$goods['pay_points']=$data['pay_points'];
+			$goods['pay_points']=0;
+			$goods['buy_points']=$data['buy_points'];
 			
 			if($goods['pay_points']>0){
 				$goods['is_points_goods']=1;
@@ -63,7 +64,8 @@ class Goods{
 				$goods['is_points_goods']=0;
 			}	
 			
-			$goods['minimum']=(int)$data['minimum'];
+			$goods['minimum']=1;
+			$goods['group_num'] = (int)$data['group_num'];
 			$goods['subtract']=$data['subtract'];
 			
 			$goods['shipping']=$data['shipping'];

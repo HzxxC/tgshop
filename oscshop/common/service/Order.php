@@ -202,6 +202,7 @@ class Order{
 					'model'=>$goods['model'],
 					'quantity'=>(int)$goods['quantity'],
 					'price'=>(float)$goods['price'],
+					'buy_points'=>$goods['buy_points'],
 					'total'=>(float)$goods['total']					
 				),false,true);
 				

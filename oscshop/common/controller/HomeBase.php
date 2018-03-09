@@ -12,7 +12,7 @@ class HomeBase extends Base{
 		parent::_initialize();		
 		
 		if(request()->isMobile()&&('mobile'!=request()->module())){
-			header('Location:'.request()->domain().'/mobile/');
+			header('Location:'.request()->domain().'/tgshop/mobile/');
 			die();
 		}
 		

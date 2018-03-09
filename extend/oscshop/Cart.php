@@ -169,6 +169,7 @@ class Cart{
 						'width'                     => $goods['width'],
 						'height'                    => $goods['height'],
 						'length_class_id'           => $goods['length_class_id'],
+						'buy_points'				=> $goods['buy_points'],
 						'stock'                     => $stock,
 						'option'                    => $option_data,				
 					);
@@ -254,6 +255,20 @@ class Cart{
    			} 			
 		}else{
 			return ['error'=>'商品不存在'];
+		}
+	}
+
+	public function check_member_has_join($param=array(), $uid) {
+		if(empty($param)){
+			return false;
+		}
+		
+		if($cart=Db::name('cart')->where(['uid'=>$uid, 'goods_id'=>(int)$param['goods_id']])->find()){			
+   			return ['error'=>'您的购物车已有此次团购，请到购物车结算'];
+		}
+
+		if($order=Db::name('order')->alias('o')->join(config('database.prefix').'order_goods og', 'og.order_id = o.order_id', 'LEFT')->where(['o.uid'=>$uid, 'og.goods_id'=>(int)$param['goods_id'], 'o.order_status_id'=>['neq', 5]])->find()){			
+   			return ['error'=>'您已参与此次团购，请到个人中心查看'];
 		}
 	}
 	

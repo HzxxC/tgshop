@@ -1,13 +1,15 @@
 {extend name="public:base" /}
 
 {block name="head"}
-<link href="__PUBLIC__/view_res/mobile/css/product.css" type="text/css" rel="Stylesheet" />
 <link href="__PUBLIC__/jquery-weui/dist/lib/weui.min.css" type="text/css" rel="Stylesheet" />
 <link href="__PUBLIC__/jquery-weui/dist/css/jquery-weui.min.css" type="text/css" rel="Stylesheet" />
 <script src="__PUBLIC__/jquery-weui/dist/js/jquery-weui.min.js"></script>
 <script src="__PUBLIC__/jquery-weui/dist/js/swiper.min.js"></script>
-
+<link href="__PUBLIC__/view_res/mobile/css/product.css" type="text/css" rel="Stylesheet" />
 <style>
+	body {
+		font-family: "Microsoft YaHei";
+	}
 	.swiper-container {
 	    width: 100%;
 	}
@@ -16,7 +18,15 @@
 	    width: 100%;
 	}
 	.option_name{margin-left:5px;}
-	      
+	.span_points {
+		font-family: "Microsoft YaHei";
+		font-size: 12px;
+	}
+	.span_red {
+		color: #f00;
+		display: inline-block;
+		padding: 0 5px;
+	}
 	/*重载jquery-weui.min.css中样式*/  
 	label > * {
 	  pointer-events: auto;
@@ -43,7 +53,7 @@
 </div>
 
 <div id="container">
-<a class="uc-add-like">收藏</a>
+<!-- <a class="uc-add-like">收藏</a> -->
 
 	<input type="hidden" value="{$goods.minimum}" name="quantity">
 	<input id="goods_id" type="hidden" value="{$goods.goods_id}" name="goods_id">
@@ -59,13 +69,13 @@
 	   	</dl>
    	{else/}
 	   	<dl class="pd-dsc clearfix">
-	        <dt>零售价：</dt>
-	        <dt class="prices" data-price="{$goods.price|round=2}" id="pd-market-price">&yen;{$goods.price|round=2}</dt>
+	        <dt></dt>
+	        <dt class="prices" data-price="{$goods.price|round=2}" id="pd-market-price">&yen;{$goods.price|round=2}&nbsp;+&nbsp;{$goods.buy_points|round=2}<span class="span_points">积分</span></dt>
 	   	</dl>
    	{/if}
    	<dl class="pd-dsc clearfix" id="product_stock_wrap">
-        <dt>库存量：</dt>
-        <dt id="pd-stock">{$goods.quantity}</dt>
+        <dt>{$goods.group_num}人团&nbsp;·&nbsp;</dt>
+        <dt id="pd-stock">还差<span class="span_red">3人</span>拼成</dt>
     </dl>
     
     {if condition="!empty($discount)"}

@@ -99,6 +99,7 @@ class Payment extends Base{
 		}
 		
 		$city_id=input('post.city_id');		
+		$total_buy_points = input('post.total_buy_points');
 		
 		$shipping=$cart->has_shipping(user('uid'),$type);
 		//配送验证
@@ -112,7 +113,7 @@ class Payment extends Base{
 				return ['error'=>'请选择收货地址'];
 			}
 		}
-		
+
 		// 验证商品数量		
 		$cart_list=Db::name('cart')->where('uid',$uid)->select();
 		
@@ -133,6 +134,12 @@ class Payment extends Base{
 			}
 			
 		}
+
+		// 判断会员积分是否充足
+		if (!check_member_points_enough($uid, $total_buy_points)) {
+			return ['error'=>'您当前的积分不足，不能完成该订单'];
+		}
+
 		return [
 			'uid'=>$uid,
 			'city_id'=>$city_id,

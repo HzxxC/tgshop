@@ -12,10 +12,10 @@ return [
     'default_filter'         => 'htmlspecialchars',
 	
     'view_replace_str'=>[
-	    '__PUBLIC__'=>'/oscshop2/public/static',
-	    '__RES__'=>'/oscshop2/public/static/view_res',
-	    '__ADMIN__' =>'/oscshop2/public/static/view_res/admin',
-	    'IMG_ROOT'=>'/oscshop2/'
+	    '__PUBLIC__'=>'/tgshop/public/static',
+	    '__RES__'=>'/tgshop/public/static/view_res',
+	    '__ADMIN__' =>'/tgshop/public/static/view_res/admin',
+	    'IMG_ROOT'=>'/tgshop/'
 	],		
 	'session'                => [
 		'type'           => '',

@@ -5,9 +5,10 @@
 {/block}  
 
 {block name="head"}
-<link href="__PUBLIC__/view_res/mobile/css/cart.css" type="text/css" rel="Stylesheet" />
+
 <link href="__PUBLIC__/jquery-weui/dist/lib/weui.min.css" type="text/css" rel="Stylesheet" />
 <link href="__PUBLIC__/jquery-weui/dist/css/jquery-weui.min.css" type="text/css" rel="Stylesheet" />
+<link href="__PUBLIC__/view_res/mobile/css/cart.css" type="text/css" rel="Stylesheet" />
 <script src="__PUBLIC__/jquery-weui/dist/lib/fastclick.js"></script>
 <script src="__PUBLIC__/jquery-weui/dist/js/jquery-weui.min.js"></script>
 <script src="__PUBLIC__/jquery-weui/dist/js/city-picker.js"></script>
@@ -88,7 +89,7 @@
             {if condition="isset($points)"}
             	<span class="dprice prices">积分：{$d.pay_points|round=2}</span>
             {else/}
-            	<span class="dprice prices" id="prices{$d.cart_id}">&yen;{$d.price|round=2}	</span>
+            	<span class="dprice prices" id="prices{$d.cart_id}">&yen;{$d.price|round=2}+{$d.buy_points}积分</span>
             {/if}	
             
             
@@ -141,12 +142,13 @@
 	            
 	            {else/}
 	            <div>
-	                总计 : <b class="prices"> &yen;</b> <b class="prices last" id="order_amount">{$total_price}</b>
+	            	<input type="hidden" id="total_buy_points" value="{$total_buy_points}">
+	                总计 : <b class="prices"> &yen;</b> <b class="prices last" id="order_amount">{$total_price} + {$total_buy_points}积分</b>
 	            </div>
 	            {/if}
 	        {else/}
 	            <div>
-	                总计 : <b class="prices"> </b> <b class="prices last" id="order_amount">{$total_point} 积分</b>
+	                总计 : <b class="prices"> </b> <b class="prices last" id="order_amount">{$total_point}</b>
 	            </div>
             {/if}
             
@@ -548,9 +550,10 @@ function changeQty(increase,goods_id,cart_id,key) {
     if ( !isNaN(qty) ) {
     	//增加
 		if(increase){			
-			update_cart(goods_id,(qty+1),cart_id,key);
+			$.toast('团购商品最大订量是'+1,"forbidden");
+			// update_cart(goods_id,(qty+1),cart_id,key);
 		}else{
-			update_cart(goods_id,(qty-1),cart_id,key);
+			// update_cart(goods_id,(qty-1),cart_id,key);
 		}     
     }
 }	
@@ -800,10 +803,11 @@ function wepayCall() {
         return false;
     }     
 	<?php } ?>
-	
+
 	var city_id=$('#city_id').val();
 	var address_id=$('#address_id').val();
 	var comment=$('#comment').val();
+	var total_buy_points=$('#total_buy_points').val();
 
     	
     $('#wechat-payment-btn').addClass('disable').html('支付发起中...');             
@@ -811,6 +815,7 @@ function wepayCall() {
   	$.post("{:url('Payment/weixin_pay')}",
   	{
   		city_id:city_id,
+  		total_buy_points:total_buy_points,
 		comment:comment,
 		address_id:address_id
   	},
@@ -846,6 +851,8 @@ function wepayCall() {
       	
     
 }
+
+
 /**
  * 微信支付回调
  * @param {type} res

@@ -33,7 +33,7 @@
 	          	<div class="tab-pane active" id="tab-data">
 	          		
 	          		<div class="form-group required">
-		                <label class="col-sm-2 control-label" for="input-image">
+		                <!-- <label class="col-sm-2 control-label" for="input-image"> -->
 		                <span title="" data-toggle="tooltip" data-original-title="上传800x800的图片">缩略图：</span>
 		                </label>
 		                
@@ -99,17 +99,29 @@
 						</div>
 					</div>
 					
-					<div class="form-group required">
+					<!-- <div class="form-group required">
 						<label class="col-sm-2 control-label" for="input-meta-title2">兑换所需积分：</label>
 						<div class="col-sm-10">
 							<input id="input-meta-title2" class="form-control" type="text" placeholder="兑换所需积分" value="{$goods.pay_points}" name="pay_points">
 						</div>
+					</div> -->
+					<div class="form-group required">
+						<label class="col-sm-2 control-label" for="input-meta-title2">购买所需积分：</label>
+						<div class="col-sm-10">
+							<input id="input-meta-title2" class="form-control" type="text" placeholder="购买所需积分" value="{$goods.buy_points}" name="buy_points">
+						</div>
 					</div>
 					
-					<div class="form-group required">
+					<!-- <div class="form-group required">
 						<label class="col-sm-2 control-label" for="input-meta-title2">最小订定量：</label>
 						<div class="col-sm-10">
 							<input id="input-meta-title2" class="form-control" type="text" placeholder="最小起定量" value="{$goods.minimum}" name="minimum">
+						</div>
+					</div> -->
+					<div class="form-group required">
+						<label class="col-sm-2 control-label" for="input-meta-title2">团购人数：</label>
+						<div class="col-sm-10">
+							<input id="input-meta-title2" class="form-control" type="text" placeholder="团购人数" value="{$goods.group_num}" name="group_num">
 						</div>
 					</div>
 					
