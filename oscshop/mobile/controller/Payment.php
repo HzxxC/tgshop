@@ -485,13 +485,14 @@ class Payment extends Base{
             );
 		
             $JsSign = $wx->paySign($packJs);			               
-		
-            $p['timestamp'] = $timeStamp;
+			
+			$p['appId'] = $config['appid'];
+            $p['timeStamp'] = $timeStamp;
 			$p['nonceStr'] = $nonceStr;							
 			$p['package'] = "prepay_id=" . $postObj->prepay_id;
 			$p['signType'] = 'MD5';
             $p['paySign'] = $JsSign;
-			
+
 			return json(['ret_code'=>0,'bizPackage'=>$p]);
          
 	  }			

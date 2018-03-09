@@ -35,7 +35,7 @@ wx.config({
     timestamp: {$signPackage.timestamp},
     nonceStr: '{$signPackage.nonceStr}',
     signature: '{$signPackage.signature}',
-    jsApiList: ['chooseWXPay']
+    jsApiList: []
 });	
 </script>
 <?php } ?>
@@ -160,7 +160,7 @@ function wxpayOrder(orderId){
 		                // 支付操作出错
 		                r.bizPackage.fail = wepayError;
 		                // 发起微信支付		                
-		                wx.chooseWXPay(r.bizPackage);
+		                callpay(r.bizPackage);
 		           
 		            } else {
 		                wepayError();
@@ -175,6 +175,32 @@ function wxpayOrder(orderId){
     }	
 }
 
+function jsApiCall(bizPackage)
+{
+    WeixinJSBridge.invoke(
+        'getBrandWCPayRequest',
+        bizPackage,
+        function(res){
+            location.href = "{:url('PaySuccess/index')}";
+            WeixinJSBridge.log(res.err_msg);
+        }
+    );
+}
+
+function callpay(bizPackage)
+{
+    if (typeof WeixinJSBridge == "undefined"){
+        if( document.addEventListener ){
+            document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+        }else if (document.attachEvent){
+            document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+            document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+        }
+    }else{
+        jsApiCall(bizPackage);
+    }
+}
+
 /**
  * 微信支付回调
  * @param {type} res
@@ -182,18 +208,18 @@ function wxpayOrder(orderId){
  */
 function wepayCallback(res) {
 		
-	 if(res.errMsg == "chooseWXPay:ok" ) {
+	if(res.errMsg == "chooseWXPay:ok" ) {
         location.href = "{:url('PaySuccess/index')}";
-        }else{
-            alert(res.errMsg);
-        }
+    }else{
+        alert(res.errMsg);
+    }
         
 }
 /**
  * 微信支付失败
  */
 function wepayError(res) {
-    alert('微信支付发起失败');    
+    alert('微信支付发起失败' + res.errMsg);    
 }      
 /**
  * 微信支付手动取消

@@ -559,6 +559,6 @@ function member_sign_in($uid, $points, $description="") {
 
 function check_member_points_enough($uid, $points) {
 	
-	$member_points = Db::name('member')->where(['uid'=>$uid])->getField('points');
-	return ($member_points > $points) ? true : false;
+	$member_points = Db::name('member')->where(['uid'=>$uid])->value('points');
+	return ($member_points >= $points) ? true : false;
 }

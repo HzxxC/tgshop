@@ -163,6 +163,7 @@ class Cart{
 						'pay_points'                => ($goods['pay_points']),
 						'total_pay_points'          => ($goods['pay_points']) * $cart['quantity'],						
 						'total_return_points'       => ($goods['points']) * $cart['quantity'],						
+						'total_buy_points'          => ($goods['buy_points']) * $cart['quantity'],						
 						'weight'          			=> ($goods['weight'] + $option_weight) * $cart['quantity'],
 						'weight_class_id'           => $goods['weight_class_id'],
 						'length'                    => $goods['length'],

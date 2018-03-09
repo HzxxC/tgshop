@@ -187,6 +187,7 @@ class Order{
 		
 		$order['pay_subject']=isset($data['pay_subject'])?$data['pay_subject']:'';
 		$order['return_points']=isset($data['return_points'])?$data['return_points']:'';
+		$order['buy_points']=isset($data['buy_points'])?$data['buy_points']:'';
 		
 		$order_id=Db::name('Order')->insert($order,false,true);	
 
@@ -319,6 +320,7 @@ class Order{
 				$t=0;		
 				$pay_points=0;
 				$return_points=0;
+				$buy_points=0;
 				foreach ($goodss as $goods) {
 					
 					$option_data = array();
@@ -340,6 +342,7 @@ class Order{
 					$t+=$goods['total'];					
 					$pay_points+=$goods['total_pay_points'];					
 					$return_points+=$goods['total_return_points'];
+					$buy_points+=$goods['total_buy_points'];
 					
 					$goods_data[] = array(
 						'goods_id'   => $goods['goods_id'],
@@ -349,6 +352,7 @@ class Order{
 						'quantity'   => $goods['quantity'],
 						'subtract'   => $goods['subtract'],
 						'price'      => $goods['price'],
+						'buy_points' => $goods['buy_points'],
 						'total'      => $goods['total']				
 					);								
 						
@@ -384,7 +388,8 @@ class Order{
 				
 				}elseif($type=='money'){//在线支付的
 					$data['total']=($t+$transport_fee['price']);					
-					$data['return_points']=$return_points;//可得积分					
+					$data['return_points']=$return_points;//可得积分		
+					$data['buy_points']=$buy_points;			
 					$data['totals'][0]=array(
 					'code'=>'sub_total',
 					'title'=>'商品价格',
@@ -448,6 +453,22 @@ class Order{
 				]
 			);
 			Db::name('member')->where('uid',$order_info['uid'])->setInc('points',$order_info['return_points']);				
+		}
+		//更新会员消耗积分
+		if(!empty($order_info['buy_points'])){			
+			Db::name('points')->insert(
+				[
+					'uid'=>$order_info['uid'],
+					'order_id'=>$order_info['order_id'],
+					'order_num_alias'=>$order_info['order_num_alias'],
+					'points'=>$order_info['buy_points'],
+					'description'=>'下单消耗积分',
+					'prefix'=>2,
+					'creat_time'=>time(),
+					'type'=>1
+				]
+			);
+			Db::name('member')->where('uid',$order_info['uid'])->setDec('points',$order_info['buy_points']);				
 		}
 		
 	

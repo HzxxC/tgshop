@@ -744,7 +744,7 @@ wx.config({
     timestamp: {$signPackage.timestamp},
     nonceStr: '{$signPackage.nonceStr}',
     signature: '{$signPackage.signature}',
-    jsApiList: ['chooseWXPay']
+    jsApiList: []
 });
 
 
@@ -835,9 +835,8 @@ function wepayCall() {
                 r.bizPackage.cancel = wepayCancel;
                 // 支付操作出错
                 r.bizPackage.fail = wepayError;
-                // 发起微信支付
-                
-                wx.chooseWXPay(r.bizPackage);
+                // 发起微信支付		                
+		        callpay(r.bizPackage);
                 // 按钮恢复
                 $('#wechat-payment-btn').removeClass('disable').html('微信安全支付');
             } else {
@@ -852,6 +851,31 @@ function wepayCall() {
     
 }
 
+function jsApiCall(bizPackage)
+{
+    WeixinJSBridge.invoke(
+        'getBrandWCPayRequest',
+        bizPackage,
+        function(res){
+        	location.href = "{:url('PaySuccess/index')}";
+            WeixinJSBridge.log(res.err_msg);
+        }
+    );
+}
+
+function callpay(bizPackage)
+{
+    if (typeof WeixinJSBridge == "undefined"){
+        if( document.addEventListener ){
+            document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+        }else if (document.attachEvent){
+            document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+            document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+        }
+    }else{
+        jsApiCall(bizPackage);
+    }
+}
 
 /**
  * 微信支付回调
