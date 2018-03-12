@@ -57,6 +57,10 @@ class Advert{
 		if(isset($filter['type'])){	
 			$map['type']=['eq',$filter['type']];	
 		}
+
+		if(isset($filter['location'])){	
+			$map['location']=['eq',$filter['location']];	
+		}
 		
 		$map['advert_id']=['GT','0'];
 		

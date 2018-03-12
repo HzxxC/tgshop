@@ -20,16 +20,23 @@
 	<thead>
 		<th><input name="name" type="text" placeholder="输入广告名称" value="{:input('name')}" /></th>
 		<th>    				
+			<select name="location">
+				<option value="">全部广告位置</option>							
+				<option {if condition="input('location') eq 1"} selected="selected"{/if} value="1">轮播广告</option>
+				<option {if condition="input('location') eq 2"} selected="selected"{/if} value="2">固定广告</option>
+			</select>
+		</th>
+		<th>    				
 			<select name="type">
 				<option value="">全部类型</option>							
-				<option {if condition="input('type') eq 1"} selected="selected"{/if}value="1">站内广告</option>
+				<option {if condition="input('type') eq 1"} selected="selected"{/if} value="1">站内广告</option>
 				<option {if condition="input('type') eq 2"} selected="selected"{/if} value="2">站外广告</option>
 			</select>
 		</th>
 		<th>    				
 			<select name="status">
 				<option value="">全部状态</option>							
-				<option {if condition="input('status') eq 1"} selected="selected"{/if}value="1">启用</option>
+				<option {if condition="input('status') eq 1"} selected="selected"{/if} value="1">启用</option>
 				<option {if condition="input('status') eq 2"} selected="selected"{/if} value="2">停用</option>
 			</select>
 		</th>
@@ -57,6 +64,7 @@
 						<th>图片</th> 
 						<th>广告名称</th> 			
 						<th>类型</th>
+						<th>广告位置</th>
 						<th>排序</th>
 						<th>状态</th>						
 						<th>操作</th>				
@@ -85,6 +93,12 @@
 								{switch name="v.type"}
 									{case value="1"}站内广告{/case}
 									{case value="2"}站外广告{/case}
+								{/switch}						
+							</td>
+							<td>	
+								{switch name="v.location"}
+									{case value="1"}轮播广告{/case}
+									{case value="2"}固定广告{/case}
 								{/switch}						
 							</td>
 							<td>

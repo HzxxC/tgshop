@@ -38,6 +38,7 @@ class Advert{
 			if ($data['type'] == 2) {
 				$advert['href']=$data['href'];
 			}
+			$advert['location']=$data['location'];
 			
 			$advert['status']=$data['status'];
 			$advert['sort_order']=(int)$data['sort_order'];
