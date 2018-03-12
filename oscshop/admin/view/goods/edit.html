@@ -70,12 +70,12 @@
 						</div>
 					</div>
 					
-					<div class="form-group required">
+					<!-- <div class="form-group required">
 						<label class="col-sm-2 control-label" for="input-meta-title2">生产地：</label>
 						<div class="col-sm-10">
 							<input id="input-meta-title2" class="form-control" type="text" placeholder="商品位置" value="" name="location">
 						</div>
-					</div>
+					</div> -->
 					
 					<div class="form-group required">
 						<label class="col-sm-2 control-label" for="input-meta-title2">销售价格：</label>
@@ -84,12 +84,12 @@
 						</div>
 					</div>
 					
-					<div class="form-group required">
+					<!-- <div class="form-group required">
 						<label class="col-sm-2 control-label" for="input-meta-title2">商品数量：</label>
 						<div class="col-sm-10">
 							<input id="input-meta-title2" class="form-control" type="text" placeholder="商品数量" value="" name="quantity">
 						</div>
-					</div>
+					</div> -->
 					
 					<div class="form-group required">
 						<label class="col-sm-2 control-label" for="input-meta-title2">购买可得积分：</label>
@@ -97,22 +97,36 @@
 							<input id="input-meta-title2" class="form-control" type="text" placeholder="购买可得积分" value="" name="points">
 						</div>
 					</div>
-					
+
 					<div class="form-group required">
+						<label class="col-sm-2 control-label" for="input-meta-title2">购买所需积分：</label>
+						<div class="col-sm-10">
+							<input id="input-meta-title2" class="form-control" type="text" placeholder="购买所需积分" value="" name="buy_points">
+						</div>
+					</div>
+					
+					<!-- <div class="form-group required">
 						<label class="col-sm-2 control-label" for="input-meta-title2">兑换所需积分：</label>
 						<div class="col-sm-10">
 							<input id="input-meta-title2" class="form-control" type="text" placeholder="兑换所需积分" value="" name="pay_points">
 						</div>
-					</div>
+					</div> -->
 					
-					<div class="form-group required">
+					<!-- <div class="form-group required">
 						<label class="col-sm-2 control-label" for="input-meta-title2">最小起订量：</label>
 						<div class="col-sm-10">
 							<input id="input-meta-title2" class="form-control" type="text" placeholder="最小起定量" value="1" name="minimum">
 						</div>
+					</div> -->
+
+					<div class="form-group required">
+						<label class="col-sm-2 control-label" for="input-meta-title2">团购人数：</label>
+						<div class="col-sm-10">
+							<input id="input-meta-title2" class="form-control" type="text" placeholder="团购人数" value="" name="group_num">
+						</div>
 					</div>
 					
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label class="col-sm-2 control-label" for="input-subtract">扣减库存：</label>
 						
 							<div class="col-sm-10">
@@ -122,7 +136,7 @@
 								<input type="radio" value="0" name="subtract">否</label>
 							</div>
 						
-					</div>		           
+					</div> -->		           
 					
 					<div class="form-group">
 						<label class="col-sm-2 control-label">需要配送：</label>
@@ -134,14 +148,14 @@
 						</div>
 					</div>					
 					
-					<div class="form-group required">
+					<!-- <div class="form-group required">
 						<label class="col-sm-2 control-label" for="input-meta-title2">重量：</label>
 						<div class="col-sm-10">
 							<input id="input-meta-title2" class="form-control" type="text" placeholder="重量" value="" name="weight">
 						</div>
-					</div>
+					</div> -->
 
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label class="col-sm-2 control-label" for="input-length-class">重量单位：</label>
 						<div class="col-sm-10">
 							
@@ -151,9 +165,9 @@
 								{/volist}
 							</select>
 						</div>
-					</div>
+					</div> -->
 		            
-		            <div class="form-group">
+		            <!-- <div class="form-group">
 						<label class="col-sm-2 control-label" for="input-length">尺寸(L x W x H)：</label>
 						<div class="col-sm-10">
 							<div class="row">
@@ -168,10 +182,10 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 
 
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label class="col-sm-2 control-label" for="input-length-class">尺寸单位：</label>
 						<div class="col-sm-10">
 							
@@ -181,7 +195,7 @@
 								{/volist}
 							</select>
 						</div>
-					</div>
+					</div> -->
 		            
 		            <div class="form-group">
 						<label class="col-sm-2 control-label">商品状态：</label>
@@ -391,10 +405,10 @@ $('#send').click(function(){
 		alert('商品名称必填');
 		return false;
 	}
-	if(category==null){
-		alert('分类必填');
-		return false;
-	}	
+	// if(category==null){
+	// 	alert('分类必填');
+	// 	return false;
+	// }	
 
 	
 	if(send==true){

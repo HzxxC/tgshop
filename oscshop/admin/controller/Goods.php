@@ -341,6 +341,19 @@ class Goods extends AdminBase{
 			return true;
 		}		
 	}
+
+	// 更新团购人数
+	function update_group_num() {
+		$data=input('post.');
+		
+		$update['goods_id']=(int)$data['goods_id'];
+		$update['group_num']=(int)$data['group_num'];
+		
+		if(Db::name('goods')->update($update)){
+			storage_user_action(UID,session('user_auth.username'),config('BACKEND_USER'),'更新商品团购人数');
+			return true;
+		}	
+	}
 	//更新排序
 	function update_sort(){
 		$data=input('post.');

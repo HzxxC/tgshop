@@ -61,7 +61,7 @@
 						<th>图片</th> 
 						<th>商品名称</th> 			
 						<th>价格</th>
-						<th>数量</th>
+						<th>团购人数</th>
 						<th>排序</th>
 						<th>状态</th>						
 						<th>操作</th>				
@@ -94,13 +94,13 @@
 							</td>
 							
 							<td>
-								<input name="price" type="text" size="2" class="price" goods_id='{$v.goods_id}' value="{$v.price}" />
+								<input name="price" type="text" size="2" class="price" goods_id='{$v.goods_id}' value="{$v.price}" style="width:100%;" />
 							</td>
 							<td>							
-								<input name="quantity" type="text" size="2" class="quantity" goods_id='{$v.goods_id}' value="{$v.quantity}" />
+								<input name="group_num" type="text" size="2" class="group_num" goods_id='{$v.goods_id}' value="{$v.group_num}" style="width:100%;" />
 							</td>
 							<td>
-								<input name="sort" type="text" size="1" class="sort" goods_id='{$v.goods_id}' value="{$v.sort_order}" />								
+								<input name="sort" type="text" size="1" class="sort" goods_id='{$v.goods_id}' value="{$v.sort_order}" style="width:100%;" />								
 							</td>
 							<td>
 								{switch name="v.status"}
@@ -185,11 +185,11 @@ $(function(){
 		);
 	});
 	
-	$('.quantity').blur(function(){
+	$('.group_num').blur(function(){
 		
 		$.post(
-			"{:url('Goods/update_quantity')}",
-			{quantity:$(this).val(),goods_id:$(this).attr('goods_id')},
+			"{:url('Goods/update_group_num')}",
+			{group_num:$(this).val(),goods_id:$(this).attr('goods_id')},
 			function(data){
 				if(data){
 					window.location.reload();

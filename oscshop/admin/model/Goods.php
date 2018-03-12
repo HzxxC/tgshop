@@ -20,9 +20,10 @@ class Goods{
 		$error=array();
 		if(empty($data['name'])){
 			$error['error']='产品名称必填';
-		}elseif(!isset($data['goods_category'])){
-			$error['error']='产品分类必填';
 		}
+		// elseif(!isset($data['goods_category'])){
+		// 	$error['error']='产品分类必填';
+		// }
 		
 		if (isset($data['goods_option'])) {
 				foreach ($data['goods_option'] as $goods_option) {
@@ -51,9 +52,10 @@ class Goods{
 			$goods['image']=$data['image'];
 			$goods['model']=$data['model'];
 			$goods['sku']=$data['sku'];
-			$goods['location']=$data['location'];
+			// $goods['location']=$data['location'];
 			$goods['price']=(float)$data['price'];
-			$goods['quantity']=(int)$data['quantity'];
+			// $goods['quantity']=(int)$data['quantity'];
+			$goods['quantity'] = 0;
 			$goods['points']=$data['points'];
 			$goods['pay_points']=0;
 			$goods['buy_points']=$data['buy_points'];
@@ -66,17 +68,17 @@ class Goods{
 			
 			$goods['minimum']=1;
 			$goods['group_num'] = (int)$data['group_num'];
-			$goods['subtract']=$data['subtract'];
+			$goods['subtract']=0;
 			
 			$goods['shipping']=$data['shipping'];
 
-			$goods['weight_class_id']=$data['weight_class_id'];
-			$goods['weight']=(float)$data['weight'];			
+			// $goods['weight_class_id']=$data['weight_class_id'];
+			// $goods['weight']=(float)$data['weight'];			
 			
-			$goods['length']=$data['length'];
-			$goods['width']=$data['width'];
-			$goods['height']=$data['height'];
-			$goods['length_class_id']=$data['length_class_id'];
+			// $goods['length']=$data['length'];
+			// $goods['width']=$data['width'];
+			// $goods['height']=$data['height'];
+			// $goods['length_class_id']=$data['length_class_id'];
 			
 			$goods['status']=$data['status'];
 			$goods['sort_order']=(int)$data['sort_order'];
