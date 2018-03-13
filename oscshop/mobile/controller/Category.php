@@ -23,7 +23,9 @@ class Category extends MobileBase
 
 		$this->assign('category',$tree->toOdArray(Db::name('category')->field('id,pid,name')->order('sort_order asc')->select()));
 
-		$this->assign('SEO',['title'=>'分类-'.config('SITE_TITLE')]);
+		$this->assign('SEO',['title'=>'搜索-'.config('SITE_TITLE')]);
+
+		$this->assign('hot_list', get_hot_keywords_list(5));
 		
 		return $this->fetch();
 	}

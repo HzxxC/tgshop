@@ -571,3 +571,11 @@ function get_adverts($location, $limit) {
 
 	return Db::name('advert')->field('advert_id, image, type, href')->where($where)->order('sort_order DESC')->limit($limit)->select();
 }
+
+function get_hot_keywords_list($limit) {
+	$where = [
+		'status' => 1
+	];
+
+	return Db::name('search_hot')->field('id, keyword')->where($where)->order('sort_order DESC')->limit($limit)->select();
+}

@@ -1,13 +1,14 @@
-<form class="search-w-box" onsubmit='searchdo(this);return false;'>
+<form class="search-w-box" id="search-form">
+    <a class="listTopArrow" onclick="history.go(-1)"></a>
 	<input type="search" name="search" id="searchBox" targ="{:url('search/index')}" value="{:input('param.search')}"  class="search-w-input" placeholder="搜一搜，找到你想要的" /> 
+    <a href="javascript:;"  onclick="searchdo();return false;" class="search-btn">搜索</a>
 </form>
 <script>
-function searchdo(form) {
-    var search = $('input[type=search]', form);
+function searchdo() {
+    var search = $('input[type=search]', $('#search-form'));
     if (search.val() === '')
     return;            
  	var url = search.attr('targ');
- 	
     var query = $('.search-w-box').find('input,select').serialize();
     query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
     query = query.replace(/^&/g, '');
