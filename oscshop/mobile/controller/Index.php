@@ -23,6 +23,11 @@ class Index extends MobileBase
 		$this->assign('SEO',['title'=>config('SITE_TITLE'),'keywords'=>config('SITE_KEYWORDS'),'description'=>config('SITE_DESCRIPTION')]);
 		
 		$this->assign('flag','index');
+
+		// 轮播
+		$this->assign('carousel_list', get_adverts(1, 5));
+		// 广告
+		$this->assign('advert_list', get_adverts(2, 1));
 		
 		if(in_wechat())
 		$this->assign('signPackage',wechat()->getJsSign(request()->url(true)));	

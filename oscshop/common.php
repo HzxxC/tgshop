@@ -562,3 +562,12 @@ function check_member_points_enough($uid, $points) {
 	$member_points = Db::name('member')->where(['uid'=>$uid])->value('points');
 	return ($member_points >= $points) ? true : false;
 }
+
+function get_adverts($location, $limit) {
+	$where = [
+		'status' => 1,
+		'location' => $location
+	];
+
+	return Db::name('advert')->field('advert_id, image, type, href')->where($where)->order('sort_order DESC')->limit($limit)->select();
+}
