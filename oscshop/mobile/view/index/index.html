@@ -1,15 +1,97 @@
 {extend name="public:base" /}
 {block name="head"}
+<link href="__PUBLIC__/jquery-weui/dist/css/jquery-weui.min.css" type="text/css" rel="Stylesheet" />
 <link href="__PUBLIC__/view_res/mobile/css/home.css" type="text/css" rel="Stylesheet" />
+<script src="__PUBLIC__/jquery-weui/dist/js/jquery-weui.min.js"></script>
+<script src="__PUBLIC__/jquery-weui/dist/js/swiper.min.js"></script>
 <script src="__PUBLIC__/artTemplate/template.js"></script>
 <script src="__PUBLIC__/view_res/mobile/load_list.js"></script>
 <script src="__PUBLIC__/view_res/mobile/index.js"></script>
+
+<style>
+    body {
+        font-family: "Microsoft YaHei";
+    }
+    .swiper-container {
+        width: 100%;
+    }
+    .swiper-container img {
+        display: block;
+        width: 100%;
+    }
+    .option_name{margin-left:5px;}
+    .span_points {
+        font-family: "Microsoft YaHei";
+        font-size: 12px;
+    }
+    .span_red {
+        color: #f00;
+        display: inline-block;
+        padding: 0 5px;
+    }
+    .advert-container {
+        position: relative;
+    }
+    .group-buy-sign {
+        position: absolute;
+        background-color: #FE241D;
+        color: #fff;
+        top: 10px;
+        left: 0;
+        padding: 8px 16px;
+        font-weight: 600;
+        letter-spacing: 4px;
+        border-radius: 0 16px 16px 0;
+    }
+    .advert img {
+        display: block;
+        width: 100%;
+    }
+    .f-l {
+        float: left;
+    }
+    .f-r {
+        float: right;
+    }
+    .b-top {
+        border-top: 1px solid #eee;
+    }
+    .home-recom section .hplist .b-top i {
+        border: none;
+    }
+    /*重载jquery-weui.min.css中样式*/  
+    label > * {
+      pointer-events: auto;
+    }   
+</style>
+
 {/block} 
 {block name="header"}
-{include file="public/search" /}
+
 {/block}
 
 {block name="content"}
+<div class="swiper-container">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        {volist name="carousel_list" id="carousel"}            
+            <div class="swiper-slide"><img src="IMG_ROOT{$carousel.image|resize=400,200}" /></div>
+        {/volist}        
+      </div>
+      <!-- If we need pagination -->
+      <div class="swiper-pagination"></div>
+</div>
+<div class="advert-container">
+    <div class="group-buy-sign">
+        <span>团购进行中</span>
+    </div>
+    <div class="advert-wrapper">
+        {volist name="advert_list" id="advert"}            
+            <div class="advert"><img src="IMG_ROOT{$advert.image|resize=400,180}" /></div>
+        {/volist}
+    </div>
+</div>
 <section class="home-recom">
     <section class="clearfix" id="goods_list">
 
@@ -21,7 +103,11 @@
 	        <a href="/mobile/goods/detail/id/<@value.goods_id@>" class="hplist">
 	                <img src="/<@value.image@>" />
 	                <p><@value.name@></p>
-	        <i>&yen;<@value.price@></i>
+                    <div class="clearfix b-top">
+                        <i class="f-l">剩余<@value.less_num@>件</i>
+                        <i class="f-r">&yen;<@value.price@></i>     
+                    </div>
+	               
 	        </a>
         <@/each@>
 </script>
@@ -92,7 +178,11 @@ wx.ready(function(){
 {/if}
 <script>
 $(function(){
-scroll_load('mobile/index/ajax_goods_list','list','goods_list');
+    $(".swiper-container").swiper({
+        loop: true,
+        autoplay: 3000
+      });
+    scroll_load('tgshop/mobile/index/ajax_goods_list','list','goods_list');
 });
 </script>
 {/block}

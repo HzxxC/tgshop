@@ -43,7 +43,8 @@ class Index extends MobileBase
         $list= osc_goods()->ajax_get_goods($page,$limit);
 		
 		if(isset($list)&&is_array($list)){
-				foreach ($list as $k => $v) {				
+				foreach ($list as $k => $v) {	
+					$list[$k]['less_num'] = $v['group_num'] - get_goods_join_num($v['goods_id']);
 					$list[$k]['image']=resize($v['image'], 250, 250);		
 				}
 		}
