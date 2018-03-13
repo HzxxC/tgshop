@@ -278,6 +278,7 @@ class Goods{
 		}
 		return [
 			'goods'=>$goods,
+			'has_join_num'=>get_goods_join_num($goods_id),
 			'image'=>Db::name('goods_image')->where('goods_id',$goods_id)->select(),
 			'options'=>$this->get_goods_options($goods_id),
 			'discount'=>Db::name('goods_discount')->where('goods_id',$goods_id)->order('quantity ASC')->select(),
@@ -288,4 +289,6 @@ class Goods{
 	public function update_goods_viewed($goods_id){
 		Db::execute("UPDATE ".config('database.prefix')."goods SET viewed = (viewed + 1) WHERE goods_id =".$goods_id);	
 	}
+
+	
 }

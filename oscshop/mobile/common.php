@@ -108,4 +108,10 @@ function deal_agent_share(){
 	}
 }
 
+function get_goods_join_num($goods_id) {
+	$join_num = Db::query('select count(order_goods_id) as count from '.config('database.prefix').'order_goods og left join '.config('database.prefix').'order o on o.order_id = og.order_id where o.order_status_id='.config('paid_order_status_id').' and og.goods_id='.$goods_id);
+
+	return $join_num[0]['count'];
+}
+
 ?>
