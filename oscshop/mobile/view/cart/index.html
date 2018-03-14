@@ -837,8 +837,7 @@ function wepayCall() {
                 r.bizPackage.fail = wepayError;
                 // 发起微信支付		                
 		        callpay(r.bizPackage);
-                // 按钮恢复
-                $('#wechat-payment-btn').removeClass('disable').html('微信安全支付');
+                
             } else {
                 wepayError();
             }
@@ -857,6 +856,8 @@ function jsApiCall(bizPackage)
         'getBrandWCPayRequest',
         bizPackage,
         function(res){
+        	// 按钮恢复
+            $('#wechat-payment-btn').removeClass('disable').html('微信安全支付');
             WeixinJSBridge.log(res.err_msg);
         }
     );

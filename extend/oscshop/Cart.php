@@ -278,7 +278,7 @@ class Cart{
 			return false;
 		}
 		
-		if(get_order_group_num((int)$param['goods_id'])){			
+		if(!get_order_group_num((int)$param['goods_id'])){			
    			return ['error'=>'此团购商品人数已满，请浏览其他商品'];
 		}
 	}
