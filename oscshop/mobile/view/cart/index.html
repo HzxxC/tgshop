@@ -857,7 +857,6 @@ function jsApiCall(bizPackage)
         'getBrandWCPayRequest',
         bizPackage,
         function(res){
-        	location.href = "{:url('PaySuccess/index')}";
             WeixinJSBridge.log(res.err_msg);
         }
     );
