@@ -56,6 +56,9 @@
                 <a class="olbtn cancel" href='{:url("order/order_info",array("order_id"=>$orders["order"]["order_id"]))}'>订单详情</a>
             <?php }elseif($orders['order']['order_status_id']==config('complete_order_status_id')){ ?>               
                 <a class="olbtn cancel" href='{:url("order/order_info",array("order_id"=>$orders["order"]["order_id"]))}'>订单详情</a>                
+            <?php }elseif($orders['order']['order_status_id']==config('receive_order_status_id')){ ?>               
+                <a class="olbtn cancel" href='{:url("order/order_info",array("order_id"=>$orders["order"]["order_id"]))}'>订单详情</a>
+                <a class="olbtn wepay" href='{:url("order/complete_order",array("order_id"=>$orders["order"]["order_id"]))}'>确认收货</a>                 
             <?php } ?>
             
         </div> <!---->

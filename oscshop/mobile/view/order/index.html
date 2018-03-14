@@ -97,6 +97,7 @@ function loadOrderList(page) {
                 // 什么都没有
                 $("#uc-orderlist").append('<div class="emptyTip">暂无数据</div>');
             } else if (HTML !== '') {
+                console.log(HTML);
                 if (page === 0) {
                     $("#uc-orderlist").html(HTML);
                 } else {

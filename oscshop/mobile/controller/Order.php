@@ -69,7 +69,6 @@ class Order extends MobileBase
 			}
 			
 		}
-		
 		$this->assign('order',$orders_list);
 		exit($this->fetch());
        
@@ -88,6 +87,11 @@ class Order extends MobileBase
 	function cancel_order(){
 		osc_order()->cancel_order((int)input('param.order_id'),UID);
 		storage_user_action(UID,user('nickname'),config('FRONTEND_USER'),'取消了订单');
+		return 1;
+	}
+	function complete_order() {
+		osc_order()->complete_order((int)input('param.order_id'),UID);
+		storage_user_action(UID,user('nickname'),config('FRONTEND_USER'),'用户确认收货');
 		return 1;
 	}
 	

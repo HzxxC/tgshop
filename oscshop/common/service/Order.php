@@ -69,6 +69,20 @@ class Order{
 		Db::execute("INSERT INTO " .config('database.prefix'). "order_history SET order_status_id = ".config('cancel_order_status_id').',order_id='.$order_id.",comment='用户取消了订单',date_added=".time());
 		
 	}
+	//确认收货
+	public function complete_order($order_id,$uid=null){
+		
+		if($uid){
+			$map['uid']=['eq',$uid];
+		}
+		$order['order_status_id']=config('complete_order_status_id');		
+		$map['order_id']=['eq',$order_id];		
+		//设置订单状态	
+		Db::name('order')->where($map)->update($order);	
+		//写人订单历史
+		Db::execute("INSERT INTO " .config('database.prefix'). "order_history SET order_status_id = ".config('complete_order_status_id').',order_id='.$order_id.",comment='用户确认收货',date_added=".time());
+		
+	}
 	
 	//订单信息
 	public function order_info($order_id,$uid=null){
