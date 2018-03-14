@@ -64,25 +64,10 @@
     <i></i><b>我喜欢，我收藏</b>我的收藏
 </div>
 
-<div class="uc-section" onclick="location.href = '{:url("points/index")}'">
-    <i class='credit'></i><b>您有 {$userinfo.points-$userinfo.cash_points} 积分可兑换</b>积分兑换
+<div class="uc-section" onclick="location.href = '{:url("points/points_list")}'">
+    <i class='credit'></i><b>您有 {$userinfo.points-$userinfo.cash_points} 积分可使用</b>我的积分
 </div>	
-	{if condition="$userinfo['is_agent'] EQ 1"}	
-	        <div class="uc-section" onclick="location.href = '{:url("Agent/sub_agent")}'">
-	            <i class='hezuo'></i><b>总收益： &yen; {$userinfo.total_bonus|0} </b>我的代理
-	        </div>
-	        <div class="uc-section" onclick="location.href = '{:url("Agent/my_agent_info")}'">
-	            <i class='infoedit'></i><b>可查看/修改资料</b>我的资料
-	        </div>
-	        <div class="uc-section" id="companyQrcode">
-	            <i class='qrcode'></i><b>一起来推广吧</b>推广分享
-	        </div>
-	        <div style="height:100px;"></div>	        
-	{else/}
-	    <div class="uc-section" onclick="location.href = '{:url("Agent/apply_agent")}'">
-	        <i class='hezuo'></i><b>加入代理，共同成长</b>成为代理
-	    </div>
-	{/if}
+	
 {if condition="in_wechat()"}{/if}
 
 {/block}

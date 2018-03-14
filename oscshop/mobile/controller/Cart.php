@@ -125,6 +125,10 @@ class Cart extends MobileBase{
    		if($error=$cart->check_member_has_join($param, $uid)){
    			return $error;
    		}
+   		// 判断团购商品是否还有剩余
+   		if($error=$cart->check_goods_remaining($param)){
+   			return $error;
+   		}
 		//验证商品数量和必选项
 		if($error=$cart->check_quantity($param)){			
 			return $error;

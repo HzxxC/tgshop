@@ -272,6 +272,16 @@ class Cart{
    			return ['error'=>'您已参与此次团购，请到个人中心查看'];
 		}
 	}
+
+	public function check_goods_remaining($param=array()) {
+		if(empty($param)){
+			return false;
+		}
+		
+		if(get_order_group_num((int)$param['goods_id'])){			
+   			return ['error'=>'此团购商品人数已满，请浏览其他商品'];
+		}
+	}
 	
 	//得到商品数量
 	public function get_goods_quantity($goods_id){		

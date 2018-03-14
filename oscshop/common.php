@@ -579,3 +579,10 @@ function get_hot_keywords_list($limit) {
 
 	return Db::name('search_hot')->field('id, keyword')->where($where)->order('sort_order DESC')->limit($limit)->select();
 }
+
+function get_order_group_num($goods_id) {
+	$goods_group_num = Db::name('goods')->where(['goods_id'=>(int)$goods_id])->value('group_num');
+	$has_buy_num = Db::name('order')->alias('o')->join(config('database.prefix').'order_goods og', 'og.order_id = o.order_id', 'LEFT')->where(['og.goods_id'=>(int)$goods_id, 'o.order_status_id'=>['neq', 5]])->count();
+
+	return ($goods_group_num - $has_buy_num) > 0 ? true : false;
+}
