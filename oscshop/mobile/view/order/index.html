@@ -129,6 +129,23 @@ function cancelOrder(orderId, node) {
         }
 }
 
+function complateOrder(orderId, node) {
+        orderId = parseInt(orderId);
+        if (orderId > 0) {
+            if (confirm('你确认要确认收货')) {
+                $.post('{:url("order/complete_order")}', {
+                    order_id: orderId
+                }, function(res) {
+                    if (res == "1") {
+                        $(node).parent().parent().slideUp();
+                    } else {
+                        alert('订单确认收货失败！');
+                    }
+                });
+            }
+        }
+}
+
 function alipayOrder(orderId){
 	orderId = parseInt(orderId);
     if (orderId > 0) {
