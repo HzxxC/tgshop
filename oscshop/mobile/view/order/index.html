@@ -4,6 +4,9 @@
 <link href="__PUBLIC__/jquery-weui/dist/lib/weui.min.css" type="text/css" rel="Stylesheet" />
 <link href="__PUBLIC__/jquery-weui/dist/css/jquery-weui.min.css" type="text/css" rel="Stylesheet" />
 <script src="__PUBLIC__/jquery-weui/dist/js/jquery-weui.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/view_res/mobile/js/flexible.js"></script>
+<script type="text/javascript" src="__PUBLIC__/view_res/mobile/js/iscroll.js"></script>
+<script type="text/javascript" src="__PUBLIC__/view_res/mobile/js/navbarscroll.js"></script>
 {/block} 
 {block name="header"}
 {include file="public/top-nav" /}
@@ -11,12 +14,17 @@
 {block name="content"}
 <input type="hidden" value="{:input('param.status')}" id="status"/>
 
-<div class='clearfix' id='uc-order-sort-bar'>
-    <div class="uc-order-sort <?php if($status==''){echo 'hover';} ?>" data-status=""><b>全部</b></div>
-    <div class="uc-order-sort <?php if($status==config('default_order_status_id')){echo 'hover';} ?>" data-status="<?php echo config('default_order_status_id'); ?>"><b>待付款</b></div>
-    <div class="uc-order-sort <?php if($status==config('paid_order_status_id')){echo 'hover';} ?>" data-status="<?php echo config('paid_order_status_id'); ?>"><b>待发货</b></div>	
-    <div class="uc-order-sort <?php if($status==config('cancel_order_status_id')){echo 'hover';} ?>" data-status="<?php echo config('cancel_order_status_id'); ?>"><b>已取消</b></div>
-    <div class="uc-order-sort <?php if($status==config('complete_order_status_id')){echo 'hover';} ?>" data-status="<?php echo config('complete_order_status_id'); ?>"><b>已完成</b></div>
+<div class="wrapper wrapper01"  id='uc-order-sort-bar'>
+<div class="scroller">
+    <ul class="clearfix">
+        <li><div class="uc-order-sort <?php if($status==''){echo 'hover';} ?>" data-status=""><b>全部</b></div></li>
+        <li><div class="uc-order-sort <?php if($status==config('default_order_status_id')){echo 'hover';} ?>" data-status="<?php echo config('default_order_status_id'); ?>"><b>待付款</b></div></li>
+        <li><div class="uc-order-sort <?php if($status==config('paid_order_status_id')){echo 'hover';} ?>" data-status="<?php echo config('paid_order_status_id'); ?>"><b>待发货</b></div> </li>
+        <li><div class="uc-order-sort <?php if($status==config('receive_order_status_id')){echo 'hover';} ?>" data-status="<?php echo config('receive_order_status_id'); ?>"><b>待收货</b></div></li>
+        <li><div class="uc-order-sort <?php if($status==config('complete_order_status_id')){echo 'hover';} ?>" data-status="<?php echo config('complete_order_status_id'); ?>"><b>已完成</b></div></li>
+        <li><div class="uc-order-sort <?php if($status==config('cancel_order_status_id')){echo 'hover';} ?>" data-status="<?php echo config('cancel_order_status_id'); ?>"><b>已取消</b></div></li>
+    </ul>
+</div>
 </div>
 
 <div id="uc-orderlist"></div>
@@ -45,6 +53,9 @@ var currentOrderpage = 0;
 var orderLoading = false;
 var orderLoadingLock = false;
 var totalheight;
+
+$('.scroller ul li').css('width', ($('.wrapper').width() * 0.2));
+$('.wrapper').navbarscroll();
 
 // orderlist列表页面
 if ($('#uc-orderlist').length > 0) {
