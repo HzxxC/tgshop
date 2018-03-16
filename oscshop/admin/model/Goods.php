@@ -24,6 +24,11 @@ class Goods{
 		// elseif(!isset($data['goods_category'])){
 		// 	$error['error']='产品分类必填';
 		// }
+		if (isset($data['flash_sale'])) {
+			if (empty($data['group_begin_date'])) {
+				$error['error']='请填写限时抢购开始时间';
+			}
+		}
 		
 		if (isset($data['goods_option'])) {
 				foreach ($data['goods_option'] as $goods_option) {
@@ -67,7 +72,7 @@ class Goods{
 			}	
 			
 			$goods['minimum']=1;
-			$goods['group_num'] = (int)$data['group_num'];
+			$goods['group_num'] = $goods['group_residue_num'] = (int)$data['group_num'];
 			$goods['subtract']=0;
 			
 			$goods['shipping']=$data['shipping'];
@@ -79,6 +84,10 @@ class Goods{
 			// $goods['width']=$data['width'];
 			// $goods['height']=$data['height'];
 			// $goods['length_class_id']=$data['length_class_id'];
+			$goods['flash_sale'] = $data['flash_sale'];
+			if ($data['flash_sale'] == 1) {
+				$goods['group_begin_date']=$data['group_begin_date'];
+			}
 			
 			$goods['status']=$data['status'];
 			$goods['sort_order']=(int)$data['sort_order'];

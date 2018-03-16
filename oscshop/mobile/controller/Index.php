@@ -30,10 +30,26 @@ class Index extends MobileBase
 		$this->assign('advert_list', get_adverts(2, 1));
 		
 		if(in_wechat())
-		$this->assign('signPackage',wechat()->getJsSign(request()->url(true)));	
+			$this->assign('signPackage',wechat()->getJsSign(request()->url(true)));	
 		
         return $this->fetch('index');
     }
+
+    public function page() {
+    	
+    	cookie('jump_url',request()->url(true));
+    	
+    	$this->assign('SEO',['title'=>config('SITE_TITLE'),'keywords'=>config('SITE_KEYWORDS'),'description'=>config('SITE_DESCRIPTION')]);
+    	
+    	if(in_wechat())
+			$this->assign('signPackage',wechat()->getJsSign(request()->url(true)));	
+    	$group_status_id = input('group_status_id');
+
+    	$this->assign('group_status_id', $group_status_id);
+
+    	return $this->fetch('page');
+    }
+
     public function ajax_goods_list(){
 
         $page=input('param.page');//页码
@@ -44,7 +60,24 @@ class Index extends MobileBase
 		
 		if(isset($list)&&is_array($list)){
 				foreach ($list as $k => $v) {	
-					$list[$k]['less_num'] = $v['group_num'] - get_goods_join_num($v['goods_id']);
+					$list[$k]['image']=resize($v['image'], 250, 250);		
+				}
+		}
+		
+        return  $list;
+    }
+
+     public function ajax_goods_list_by_group_status(){
+
+        $page=input('param.page');//页码
+        $group_status_id = input('param.group_status_id');
+
+        $limit =6;
+		
+        $list= osc_goods()->ajax_get_goods_by_group_status($group_status_id,$page,$limit);
+		
+		if(isset($list)&&is_array($list)){
+				foreach ($list as $k => $v) {	
 					$list[$k]['image']=resize($v['image'], 250, 250);		
 				}
 		}

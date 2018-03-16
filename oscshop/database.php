@@ -2,10 +2,10 @@
 return [
     'type'        => 'mysql',
     'dsn'         => '',   
-    'hostname'    => '127.0.0.1',  
-    'database'    => 'oscshop2',   
+    'hostname'    => '121.42.159.217',  
+    'database'    => 'tgshop',   
     'username'    => 'root',    
-    'password'    => '',    
+    'password'    => 'diandong',    
     'hostport'    => '3306',    
     'params'      => [],   
     'charset'     => 'utf8',    

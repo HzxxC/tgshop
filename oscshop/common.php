@@ -582,7 +582,44 @@ function get_hot_keywords_list($limit) {
 
 function get_order_group_num($goods_id) {
 	$goods_group_num = Db::name('goods')->where(['goods_id'=>(int)$goods_id])->value('group_num');
-	$has_buy_num = Db::name('order')->alias('o')->join(config('database.prefix').'order_goods og', 'og.order_id = o.order_id', 'LEFT')->where(['og.goods_id'=>(int)$goods_id, 'o.order_status_id'=>['neq', 5]])->count();
+	$has_buy_num = Db::name('order')->alias('o')->join(config('database.prefix').'order_goods og', 'og.order_id = o.order_id', 'LEFT')->where(['og.goods_id'=>(int)$goods_id, 'o.order_status_id'=>['not in', '3, 5']])->count();
 
 	return ($goods_group_num - $has_buy_num) > 0 ? true : false;
+}
+
+function get_group_status_by_order_id($order_id) {
+	$goods_id = Db::name('order_goods')->field('goods_id')->where(['order_id'=>(int)$order_id])->select();
+	$count = 0;
+	foreach($goods_id as $value) {
+		$res = Db::name('goods')->field('group_residue_num, group_status_id')->where(['goods_id'=>(int)$value['goods_id']])->find();
+		if ($res['group_residue_num'] == 0 && $res['group_status_id'] == 0) {
+			return false;
+		}
+	}
+	return true;
+}
+
+function set_group_status_id() {
+	// 抢购
+	$where_limit_time = [
+		'status'=>1,
+		'group_status_id'=>2, 
+		'UNIX_TIMESTAMP(group_begin_date)'=>['elt', time()]
+	];
+	Db::name('goods')->where($where_limit_time)->update(['group_status_id'=>1]);
+	// 团购已满
+	$where_group_end = [
+		'status'=>1,
+		'group_status_id'=>1,
+		'group_residue_num'=>0
+	];
+	Db::name('goods')->where($where_group_end)->update(['group_status_id'=>0]);
+}
+
+function group_has_buy($goods_id) {
+	return  Db::name('order')->alias('o')->join(config('database.prefix').'order_goods og', 'og.order_id = o.order_id', 'LEFT')->where(['og.goods_id'=>(int)$goods_id, 'o.order_status_id'=>['not in', '3, 5']])->count();
+}
+
+function set_order_status($order, $status_id) {
+	Db::name('order')->where(['order_id'=>$order_id])->update(['order_status'=>$status_id]);
 }

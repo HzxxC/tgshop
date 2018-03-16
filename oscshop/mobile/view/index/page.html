@@ -13,13 +13,6 @@
         font-family: "Microsoft YaHei";
         background-color: #FFF;
     }
-    .swiper-container {
-        width: 100%;
-    }
-    .swiper-container img {
-        display: block;
-        width: 100%;
-    }
     .option_name{margin-left:5px;}
     .span_points {
         font-family: "Microsoft YaHei";
@@ -29,9 +22,6 @@
         color: #f00;
         display: inline-block;
         padding: 0 5px;
-    }
-    .advert-container {
-        position: relative;
     }
     .group-buy-sign {
         position: absolute;
@@ -45,10 +35,6 @@
         border-radius: 0 16px 16px 0;
         font-family: "Microsoft Yahei";
         font-size: 12px;
-    }
-    .advert img {
-        display: block;
-        width: 100%;
     }
     .f-l {
         float: left;
@@ -103,53 +89,19 @@
 {/block}
 
 {block name="content"}
-<div class="swiper-container">
-      <!-- Additional required wrapper -->
-      <div class="swiper-wrapper">
-        <!-- Slides -->
-        {volist name="carousel_list" id="carousel"}            
-            <div class="swiper-slide"><img src="IMG_ROOT{$carousel.image|resize=400,200}" /></div>
-        {/volist}        
-      </div>
-      <!-- If we need pagination -->
-      <div class="swiper-pagination"></div>
-</div>
-<div class="category-list">
-    <ul class="clearfix">
-        <li>
-            <a href="{:url('index/page', array('group_status_id'=>1))}">
-                <img src="__PUBLIC__/view_res/mobile/images/icon/index-cate-icon-01.png" alt="">
-                <span>火拼团购</span>
-            </a>
-        </li>
-        <li>
-            <a href="{:url('index/page', array('group_status_id'=>0))}">
-                <img src="__PUBLIC__/view_res/mobile/images/icon/index-cate-icon-02.png" alt="">
-                <span>往期回顾</span>
-            </a>
-        </li>
-        <li>
-            <a href="{:url('index/page', array('group_status_id'=>2))}">
-                <img src="__PUBLIC__/view_res/mobile/images/icon/index-cate-icon-03.png" alt="">
-                <span>即将开抢</span>
-            </a>
-        </li>
-        <li>
-            <a href="{:url('SignIn/index')}">
-                <img src="__PUBLIC__/view_res/mobile/images/icon/index-cate-icon-04.png" alt="">
-                <span>积分签到</span>
-            </a>
-        </li>
-    </ul>
-</div>
 <div class="advert-container">
     <div class="group-buy-sign">
-        <span>团购进行中</span>
-    </div>
-    <div class="advert-wrapper">
-        {volist name="advert_list" id="advert"}            
-            <div class="advert"><img src="IMG_ROOT{$advert.image|resize=400,100}" /></div>
-        {/volist}
+        {switch name="$group_status_id"}
+            {case value="0"}
+                <span>历史团购</span>
+            {/case}
+            {case value="1"}
+                <span>团购进行中</span>
+            {/case}
+            {case value="2"}
+                <span>即将开抢</span>
+            {/case}
+        {/switch}
     </div>
 </div>
 <section class="home-recom">
@@ -164,7 +116,7 @@
 	                <img src="/<@value.image@>" />
 	                <p><@value.name@></p>
                     <div class="clearfix b-top">
-                        <i class="f-l">剩余<@value.less_num@>件</i>
+                        <i class="f-l">剩余<@value.group_residue_num@>件</i>
                         <i class="f-r">&yen;<@value.price@></i>     
                     </div>
 	               
@@ -238,11 +190,8 @@ wx.ready(function(){
 {/if}
 <script>
 $(function(){
-    $(".swiper-container").swiper({
-        loop: true,
-        autoplay: 3000
-      });
-    scroll_load('mobile/index/ajax_goods_list','list','goods_list');
+    var group_status_id = "{$group_status_id}";
+    scroll_load('mobile/index/ajax_goods_list_by_group_status/group_status_id/'+group_status_id,'list','goods_list');
 });
 </script>
 {/block}

@@ -283,6 +283,8 @@ class Cart{
 		}
 	}
 	
+	
+
 	//得到商品数量
 	public function get_goods_quantity($goods_id){		
 		return Db::name('goods')->where('goods_id',$goods_id)->field('quantity')->find();		

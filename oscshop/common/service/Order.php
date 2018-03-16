@@ -484,7 +484,13 @@ class Order{
 			);
 			Db::name('member')->where('uid',$order_info['uid'])->setDec('points',$order_info['buy_points']);				
 		}
-		
+		// 更新团购活动购买人数
+		$goods_list = Db::name('order_goods')->field('goods_id')->where('order_id',$order_info['order_id'])->select();
+		if (!empty($goods_list)) {
+			foreach ($goods_list as $value) {
+				Db::name('goods')->where('goods_id',$value['goods_id'])->setDec('group_residue_num',1);
+			}
+		}
 	
 		$member=Db::name('member')->where('uid',$order_info['uid'])->find();
 		//存在上级代理商,本系统代理商只做一级分红
@@ -576,6 +582,17 @@ class Order{
 			}
 		}
 		
+	}
+
+	public function check_goods_group_num($order_id) {
+		if(empty($param)){
+			return false;
+		}
+		
+		if(!get_group_status_by_order_id((int)$order_id)){			
+			set_order_status($order_id, config('cancel_order_status_id'));
+   			return ['error'=>'此团购商品人数已满，无法购买该商品，请重新选择'];
+		}
 	}
 }
 

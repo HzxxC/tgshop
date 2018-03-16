@@ -88,6 +88,9 @@ class Goods extends AdminBase{
 		
 				$this->error('商品名称必填！');	
 			}
+			if (!empty($data['group_num'])) {
+				$data['group_residue_num'] = $data['group_num'] - group_has_buy($data['goods_id']);
+			}
 			
 			$description=$data['description'];
 			unset($data['description']);
@@ -348,6 +351,7 @@ class Goods extends AdminBase{
 		
 		$update['goods_id']=(int)$data['goods_id'];
 		$update['group_num']=(int)$data['group_num'];
+		$update['group_residue_num'] = (int)$data['group_num']-group_has_buy($data['goods_id']);
 		
 		if(Db::name('goods')->update($update)){
 			storage_user_action(UID,session('user_auth.username'),config('BACKEND_USER'),'更新商品团购人数');

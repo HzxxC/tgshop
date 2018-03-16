@@ -136,7 +136,31 @@
 							</div>
 						
 					</div> -->
-		            
+		            <div class="form-group">
+						<label class="col-sm-2 control-label">限时抢购：</label>
+						<div class="col-sm-10">
+							<label class="radio-inline">
+							<input type="radio" value="1" name="flash_sale">开启</label>
+							<label class="radio-inline">
+							<input type="radio" checked="checked" value="0" name="flash_sale">关闭</label>
+						</div>
+					</div>	
+					{if condition="$goods.flash_sale eq 1"}
+						<div class="form-group required" id="flash_sale_box">
+							<label class="col-sm-2 control-label" for="group_begin_date">抢购开始时间：</label>
+							<div class="col-sm-10">
+								<input id="group_begin_date" class="form-control" type="text" placeholder="抢购开始时间" value="{$goods.group_begin_date}" name="group_begin_date">
+							</div>
+						</div>  
+						{else/}
+						<div class="form-group required" id="flash_sale_box" style="display: none;">
+							<label class="col-sm-2 control-label" for="group_begin_date">抢购开始时间：</label>
+							<div class="col-sm-10">
+								<input id="group_begin_date" class="form-control" type="text" placeholder="抢购开始时间" value="" name="">
+							</div>
+						</div>  
+					{/if}
+					
 		           
 					
 					<div class="form-group">
@@ -265,12 +289,35 @@
 {/block}
 {block name="javascript"}	
 <script src="__PUBLIC__/js/ckeditor/ckeditor.js"></script> 
+<script src="__ADMIN__/bootstrap/bootstrap.min.js"></script> 
+<script src="__ADMIN__/bootstrap/bootstrap-datetimepicker.min.js"></script> 
+<script src="__ADMIN__/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script> 
 <script>
+
+$('input[name="flash_sale"]').on('change', function() {
+	if ($(this).val() == 1) {
+		$('#flash_sale_box').show();
+		$('#group_begin_date').attr('name', 'group_begin_date');
+	} else {
+		$('#flash_sale_box').hide();
+		$('#group_begin_date').attr('name', '').val("");
+	}
+});
+$('#group_begin_date').datetimepicker({
+    autoclose: true,
+    todayHighlight: true,
+    minView: "month", //设置只显示到月份
+    startView: 2,
+    todayBtn: true,
+    language: "zh-CN",
+    format: "yyyy-mm-dd"
+});
 $(function(){
 	{if condition="$Request.param.id"}
 				Oscshop.setValue("status", {$goods.status|default=1});		
 				Oscshop.setValue("subtract",{$goods.subtract|default=1});		
 				Oscshop.setValue("shipping",{$goods.shipping|default=1});
+				Oscshop.setValue("flash_sale",{$goods.flash_sale|default=1});
 	{/if}
 });	
 

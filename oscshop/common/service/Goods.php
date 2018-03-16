@@ -143,6 +143,19 @@ class Goods{
 		
 		return $list;			
 	}
+
+	public function ajax_get_goods_by_group_status($group_status_id, $page_num,$limit_num){		
+		//页码
+		$page=$page_num;
+		//数据量
+		$limit = ((int)$limit_num * (int)$page) . ",".(int)$limit_num;
+					
+		$sql='SELECT goods_id,image,price,group_num,name FROM '.config('database.prefix').'goods WHERE status=1 AND group_status_id='.$group_status_id.' ORDER BY goods_id LIMIT '.$limit;
+		
+		$list=Db::query($sql);				
+		
+		return $list;			
+	}
 	//取得商品选项
 	public function get_goods_options($goods_id) {
 		

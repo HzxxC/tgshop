@@ -132,7 +132,7 @@ class Payment extends Base{
 			if($error=$cart->check_quantity($param)){			
 				return $error;
 			}
-			
+
 		}
 
 		// 判断会员积分是否充足
@@ -383,6 +383,10 @@ class Payment extends Base{
 		if(isset($check['error'])){
 			return $check;
 		}
+		$check_group_num = osc_order()->check_goods_group_num($order_id);
+		if(isset($check_group_num['error'])){
+			return $check_group_num;
+		} 
 		
 		$order=Db::name('order')->where('order_id',$order_id)->find();
 		
