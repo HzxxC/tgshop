@@ -108,7 +108,15 @@
       <div class="swiper-wrapper">
         <!-- Slides -->
         {volist name="carousel_list" id="carousel"}            
-            <div class="swiper-slide"><img src="IMG_ROOT{$carousel.image|resize=400,200}" /></div>
+            <div class="swiper-slide">
+                {if condition="$carousel.type eq 1"}
+                    <a href="{:url('page/index', array('advert_id'=>$carousel.advert_id))}">
+                {else/}
+                     <a href="{$carousel.href}">
+                {/if}
+                    <img src="IMG_ROOT{$carousel.image|resize=400,200}" />
+                </a>
+            </div>
         {/volist}        
       </div>
       <!-- If we need pagination -->
@@ -148,7 +156,15 @@
     </div>
     <div class="advert-wrapper">
         {volist name="advert_list" id="advert"}            
-            <div class="advert"><img src="IMG_ROOT{$advert.image|resize=400,100}" /></div>
+            <div class="advert">
+                {if condition="$advert.type eq 1"}
+                    <a href="{:url('page/index', array('advert_id'=>$advert.advert_id))}">
+                {else/}
+                     <a href="{$advert.href}">
+                {/if}
+                    <img src="IMG_ROOT{$advert.image|resize=400,100}" />
+                </a>
+            </div>
         {/volist}
     </div>
 </div>

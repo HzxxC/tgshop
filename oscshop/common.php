@@ -572,6 +572,15 @@ function get_adverts($location, $limit) {
 	return Db::name('advert')->field('advert_id, image, type, href')->where($where)->order('sort_order DESC')->limit($limit)->select();
 }
 
+function get_advert_info($advert_id) {
+	$where = [
+		'status' => 1,
+		'advert_id' => $advert_id
+	];
+
+	return Db::name('advert')->field('advert_id, name, image, type, href, description')->where($where)->find();
+}
+
 function get_hot_keywords_list($limit) {
 	$where = [
 		'status' => 1
