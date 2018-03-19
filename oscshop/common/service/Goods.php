@@ -137,7 +137,7 @@ class Goods{
 		//数据量
 		$limit = ((int)$limit_num * (int)$page) . ",".(int)$limit_num;
 					
-		$sql='SELECT goods_id,image,price,group_num,name FROM '.config('database.prefix').'goods WHERE status=1 ORDER BY goods_id LIMIT '.$limit;
+		$sql='SELECT goods_id,image,price,group_num,name,group_residue_num FROM '.config('database.prefix').'goods WHERE status=1 AND group_status_id = 1 ORDER BY goods_id LIMIT '.$limit;
 		
 		$list=Db::query($sql);				
 		
@@ -150,7 +150,7 @@ class Goods{
 		//数据量
 		$limit = ((int)$limit_num * (int)$page) . ",".(int)$limit_num;
 					
-		$sql='SELECT goods_id,image,price,group_num,name FROM '.config('database.prefix').'goods WHERE status=1 AND group_status_id='.$group_status_id.' ORDER BY goods_id LIMIT '.$limit;
+		$sql='SELECT goods_id,image,price,group_num,name,group_residue_num FROM '.config('database.prefix').'goods WHERE status=1 AND group_status_id='.$group_status_id.' ORDER BY goods_id LIMIT '.$limit;
 		
 		$list=Db::query($sql);				
 		

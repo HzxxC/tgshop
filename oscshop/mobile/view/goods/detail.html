@@ -75,7 +75,12 @@
    	{/if}
    	<dl class="pd-dsc clearfix" id="product_stock_wrap">
         <dt>{$goods.group_num}人团&nbsp;·&nbsp;</dt>
-        <dt id="pd-stock">还差<span class="span_red">{$less_num}人</span>拼成</dt>
+        {if condition="$goods.group_residue_num eq 0"}
+			<dt id="pd-stock">团购人数已满，团购已结束</dt>
+			{else}
+			<dt id="pd-stock">还差<span class="span_red">{$goods.group_residue_num}人</span>拼成</dt>
+        {/if}
+        
     </dl>
     
     {if condition="!empty($discount)"}
@@ -212,8 +217,20 @@
 	</div>
 {else/}
 <div id="appCartWrap" class="clearfix">    
-	<a class="button" id="addcart-button"  data-add="1">加入购物车</a>   
-	<a class="button" id="buy-button" data-add="0" >立即购买</a>  
+	{switch name="$goods.group_status_id"}
+		{case value="0"}
+			<a class="button" href="javascript:;" style="width:100px; float:right; background-color: #999;">加入购物车</a>   
+			<a class="button" href="javascript:;" style="margin-right: 115px; background-color: #999;">已结束</a>  
+		{/case}
+		{case value="1"}
+			<a class="button" id="addcart-button"  data-add="1">加入购物车</a>   
+			<a class="button" id="buy-button" data-add="0" >立即购买</a>  
+		{/case}
+		{case value="2"}
+			<a class="button" href="javascript:;" style="width:100px; float:right; background-color: #999;">加入购物车</a>   
+			<a class="button" href="javascript:;" style="margin-right: 115px; background-color: #999;">即将开始</a>
+		{/case}
+	{/switch}
 	<a id="toCart" href="{:url('cart/index')}"><i>
 		{if condition="session('mobile_total')"}
 			{$Think.session.mobile_total}

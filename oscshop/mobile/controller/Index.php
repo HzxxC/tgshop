@@ -45,6 +45,20 @@ class Index extends MobileBase
 			$this->assign('signPackage',wechat()->getJsSign(request()->url(true)));	
     	$group_status_id = input('group_status_id');
 
+    	switch ($group_status_id) {
+    		case 0:
+    			$top_title = "历史团购";
+    			break;
+    		case 1:
+    			$top_title = "团购进行中";
+    			break;
+			case 2:
+				$top_title = "即将开抢";
+    			break;
+    	}
+    	
+
+    	$this->assign('top_title',$top_title);
     	$this->assign('group_status_id', $group_status_id);
 
     	return $this->fetch('page');

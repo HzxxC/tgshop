@@ -86,6 +86,7 @@ class Goods{
 			// $goods['length_class_id']=$data['length_class_id'];
 			$goods['flash_sale'] = $data['flash_sale'];
 			if ($data['flash_sale'] == 1) {
+				$goods['group_status_id'] = 2;
 				$goods['group_begin_date']=$data['group_begin_date'];
 			}
 			

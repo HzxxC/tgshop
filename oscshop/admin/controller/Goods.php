@@ -91,6 +91,9 @@ class Goods extends AdminBase{
 			if (!empty($data['group_num'])) {
 				$data['group_residue_num'] = $data['group_num'] - group_has_buy($data['goods_id']);
 			}
+			if ($data['flash_sale'] == 1) {
+				$data['group_status_id'] = 2;
+			}
 			
 			$description=$data['description'];
 			unset($data['description']);

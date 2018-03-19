@@ -20,11 +20,10 @@ class MobileBase extends Base{
 		if(!request()->isMobile()&&(false==config('app_debug'))){
 			$this->error('请使用移动端打开');
 		}
+		// 更新团购状态
+		set_group_status_id();
 		//微信中获取用户信息自动注册	
 		if(in_wechat()){
-			// 更新团购状态
-			set_group_status_id();
-			
 			wechat()->wechatAutoReg(wechat()->getOpenId());				
 			
 			if(!session('mobile_total')){

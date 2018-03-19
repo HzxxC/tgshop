@@ -13,6 +13,7 @@
         font-family: "Microsoft YaHei";
         background-color: #FFF;
     }
+    
     .option_name{margin-left:5px;}
     .span_points {
         font-family: "Microsoft YaHei";
@@ -85,25 +86,10 @@
 
 {/block} 
 {block name="header"}
-
+{include file="public/top-nav" /}
 {/block}
 
 {block name="content"}
-<div class="advert-container">
-    <div class="group-buy-sign">
-        {switch name="$group_status_id"}
-            {case value="0"}
-                <span>历史团购</span>
-            {/case}
-            {case value="1"}
-                <span>团购进行中</span>
-            {/case}
-            {case value="2"}
-                <span>即将开抢</span>
-            {/case}
-        {/switch}
-    </div>
-</div>
 <section class="home-recom">
     <section class="clearfix" id="goods_list">
 
@@ -116,7 +102,11 @@
 	                <img src="/<@value.image@>" />
 	                <p><@value.name@></p>
                     <div class="clearfix b-top">
-                        <i class="f-l">剩余<@value.group_residue_num@>件</i>
+                         <@if value.group_residue_num == 0@>
+                            <i class="f-l">团购已结束</i>
+                        <@else@>
+                            <i class="f-l">剩余<@value.group_residue_num@>件</i>
+                        <@/if@>
                         <i class="f-r">&yen;<@value.price@></i>     
                     </div>
 	               

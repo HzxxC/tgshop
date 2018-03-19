@@ -32,7 +32,6 @@ class Goods extends MobileBase{
 		
 		$this->assign('top_title',$list['goods']['name']);
 		$this->assign('goods',$list['goods']);
-		$this->assign('less_num', ($list['goods']['group_num'] - $list['has_join_num']));
 		$this->assign('image',$list['image']);
 		$this->assign('options',$list['options']);
 		$this->assign('discount',$list['discount']);
