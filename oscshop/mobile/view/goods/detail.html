@@ -75,9 +75,11 @@
    	{/if}
    	<dl class="pd-dsc clearfix" id="product_stock_wrap">
         <dt>{$goods.group_num}人团&nbsp;·&nbsp;</dt>
-        {if condition="$goods.group_residue_num eq 0"}
+        {if condition="$goods.group_status_id eq 0"}
 			<dt id="pd-stock">团购人数已满，团购已结束</dt>
-			{else}
+		{elseif condition="$goods.group_status_id eq 2"}
+			<dt id="pd-stock">开抢时间：{$goods.group_begin_date}</dt>
+		{else}
 			<dt id="pd-stock">还差<span class="span_red">{$goods.group_residue_num}人</span>拼成</dt>
         {/if}
         

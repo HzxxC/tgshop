@@ -102,8 +102,10 @@
 	                <img src="/<@value.image@>" />
 	                <p><@value.name@></p>
                     <div class="clearfix b-top">
-                         <@if value.group_residue_num == 0@>
+                         <@if value.group_status_id == 0@>
                             <i class="f-l">团购已结束</i>
+                        <@elseif value.group_status_id == 2@>
+                            <i class="f-l">开抢时间：<@value.group_begin_date@></i>
                         <@else@>
                             <i class="f-l">剩余<@value.group_residue_num@>件</i>
                         <@/if@>
