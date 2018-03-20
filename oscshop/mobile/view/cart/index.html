@@ -854,8 +854,9 @@ function jsApiCall(bizPackage)
         'getBrandWCPayRequest',
         bizPackage,
         function(res){
-        	// 按钮恢复
-            $('#wechat-payment-btn').removeClass('disable').html('微信安全支付');
+        	if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+        		window.location.href="{:url('order/index')}";
+        	}
             // alert(res.err_code+res.err_desc+res.err_msg);
         }
     );
