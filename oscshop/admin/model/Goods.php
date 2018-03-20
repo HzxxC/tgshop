@@ -24,7 +24,7 @@ class Goods{
 		// elseif(!isset($data['goods_category'])){
 		// 	$error['error']='产品分类必填';
 		// }
-		if (isset($data['flash_sale'])) {
+		if ($data['flash_sale'] == 1) {
 			if (empty($data['group_begin_date'])) {
 				$error['error']='请填写限时抢购开始时间';
 			}
@@ -60,7 +60,7 @@ class Goods{
 			// $goods['location']=$data['location'];
 			$goods['price']=(float)$data['price'];
 			// $goods['quantity']=(int)$data['quantity'];
-			$goods['quantity'] = 0;
+			// $goods['quantity'] = 0;
 			$goods['points']=$data['points'];
 			$goods['pay_points']=0;
 			$goods['buy_points']=$data['buy_points'];
@@ -72,13 +72,13 @@ class Goods{
 			}	
 			
 			$goods['minimum']=1;
-			$goods['group_num'] = $goods['group_residue_num'] = (int)$data['group_num'];
+			$goods['quantity'] = $goods['group_num'] = $goods['group_residue_num'] = (int)$data['group_num'];
 			$goods['subtract']=0;
 			
 			$goods['shipping']=$data['shipping'];
 
-			// $goods['weight_class_id']=$data['weight_class_id'];
-			// $goods['weight']=(float)$data['weight'];			
+			$goods['weight_class_id']=1;
+			$goods['weight']=(float)$data['weight'];			
 			
 			// $goods['length']=$data['length'];
 			// $goods['width']=$data['width'];

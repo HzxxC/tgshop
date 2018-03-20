@@ -20,7 +20,7 @@
 	<thead>
 		<input name="type" type="hidden"  value="search" />
 		<th><input name="name" type="text" placeholder="输入商品名称" value="{:input('name')}" /></th>
-		<th>    				
+		<!-- <th>    				
 			<select name="category">
 				<option value="">全部分类</option>			
 				<?php $input_cid=input('category'); ?>				
@@ -29,7 +29,7 @@
 				{/volist}
 				
 			</select>
-		</th>	
+		</th>	 -->
 		<th>    				
 			<select name="status">
 				<option value="">全部状态</option>							
@@ -123,7 +123,7 @@
 											<a href='{:url("Goods/edit_general",array("id"=>$v["goods_id"]))}'>基本信息</a>
 										</li>									
 																		
-										<li>
+										<!-- <li>
 											<a href='{:url("Goods/edit_links",array("id"=>$v["goods_id"]))}'>关联</a>
 										</li>
 										<li>
@@ -131,13 +131,14 @@
 										</li>
 										<li>
 											<a href='{:url("Goods/edit_discount",array("id"=>$v["goods_id"]))}'>折扣</a>
-										</li>
+										</li> -->
+										<li>
+											<a href='{:url("Goods/edit_mobile",array("id"=>$v["goods_id"]))}'>商品描述</a>
+										</li>	
 										<li>
 											<a href='{:url("Goods/edit_image",array("id"=>$v["goods_id"]))}'>商品相册</a>
 										</li>
-										<li>
-											<a href='{:url("Goods/edit_mobile",array("id"=>$v["goods_id"]))}'>手机端描述</a>
-										</li>									
+																		
 									</ul>
 								</div>
 								
